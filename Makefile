@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS :=
+CXXFLAGS := -I./include/
 LDLIBS :=
 
 SRCDIR := FallingSandSurvival
@@ -20,10 +20,13 @@ $(BIN): $(OBJ)
 %.o: $(SRCDIR)/%.cpp
 	$(CXX) -Wall -o $(OBJDIR)/$@ -c $< $(CXXFLAGS)
 
-SDL_gpu:
+SDL_gpu: dirs
 	@-if [ ! -d sdl-gpu/build ]; then mkdir sdl-gpu/build; fi;
 	cmake -S sdl-gpu -B sdl-gpu/build
 	cmake --build sdl-gpu/build --parallel `nproc`
+
+	@-if [ ! -d $(INCDIR) ]; then mkdir $(INCDIR); fi;
+	cp sdl-gpu/build/SDL_gpu/include/* $(INCDIR) -r
 
 dirs:
 	@-if [ ! -d $(BINDIR) ]; then mkdir $(BINDIR); fi;
