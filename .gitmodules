@@ -8,3 +8,6 @@
 [submodule "easy_profiler"]
 	path = easy_profiler
 	url = https://github.com/yse/easy_profiler.git
+[submodule "enet"]
+	path = enet
+	url = https://github.com/zpl-c/enet.git
