@@ -1,6 +1,8 @@
 
 #include "Controls.h"
 
+#include <iostream>
+
 std::vector<KeyControl*> Controls::keyControls = {};
 //KeyControl** Controls::keyControls = new KeyControl*[NUM_CONTROLS];
 bool Controls::initted = false;
@@ -31,11 +33,11 @@ bool Controls::rmouse = false;
 void Controls::keyEvent(SDL_KeyboardEvent event) {
     //if (keyControls[event.keysym.sym]) {}
 
-    logDebug("SDL_KEYEV {0:c} {0:d} {0:d}", event.keysym.sym, event.repeat, event.keysym.sym);
+    std::cout << "SDL_KEYEV {0:c} {0:d} {0:d}" << event.keysym.sym << event.repeat << event.keysym.sym << std::endl;
 
     for(auto& v : keyControls) {
         if(v->key == event.keysym.sym) {
-            logDebug("match KEY {0:d}", event.keysym.sym);
+            //logDebug("match KEY {0:d}", event.keysym.sym);
 
             bool newState = false;
             switch(event.type) {

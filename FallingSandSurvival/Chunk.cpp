@@ -209,8 +209,8 @@ std::vector<std::string> string_split(std::string s, const char delimiter) {
     return output;
 }
 
-std::vector<std::string>
-split2(std::string const& original, char separator) {
+/* std::vector<std::string>
+split2(std::string const& original, const char& separator) {
     std::vector<std::string> results;
     std::string::const_iterator start = original.begin();
     std::string::const_iterator end = original.end();
@@ -221,5 +221,25 @@ split2(std::string const& original, char separator) {
         next = std::find(start, end, separator);
     }
     results.push_back(std::string(start, next));
+    return results;
+} */
+
+#include <cstring>
+
+std::vector<std::string>
+split2(const std::string& original, const char& separator) {
+    std::vector<std::string> results;
+
+    char *orig_str = (char *) original.c_str();
+    char *token = strtok(orig_str, &separator);
+
+    if (token != NULL) {
+        results.push_back(token);
+        token = strtok(NULL, &separator);
+        results.push_back(token);
+    } else {
+        results.push_back(original);
+    }
+
     return results;
 }

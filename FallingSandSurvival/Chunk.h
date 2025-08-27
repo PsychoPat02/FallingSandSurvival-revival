@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include <vector>
+#include <sys/stat.h>
 
 #ifndef INC_Tiles
 #include "Tiles.h"
