@@ -20,6 +20,8 @@ $(BIN): $(OBJ)
 %.o: $(SRCDIR)/%.cpp
 	$(CXX) -Wall -o $(OBJDIR)/$@ -c $< $(CXXFLAGS)
 
+libs: SDL SDL_gpu easy box2d
+
 SDL_gpu: dirs
 	@-if [ ! -d sdl-gpu/build ]; then mkdir sdl-gpu/build; fi;
 	cmake -S sdl-gpu -B sdl-gpu/build
@@ -44,6 +46,14 @@ easy: dirs
 
 	@-if [ ! -d $(INCDIR)/easy ]; then mkdir $(INCDIR)/easy; fi;
 	cp easy_profiler/easy_profiler_core/include/easy/* $(INCDIR)/easy/ -r
+
+box2d: dirs
+	@-if [ ! -d box2d/build ]; then mkdir box2d/build; fi;
+	cmake -S box2d -B box2d/build
+	cmake --build box2d/build --parallel `nproc`
+
+	@-if [ ! -d $(INCDIR)/box2d ]; then mkdir $(INCDIR)/box2d; fi;
+	cp box2d/include/box2d/* $(INCDIR)/box2d
 
 dirs:
 	@-if [ ! -d $(BINDIR) ]; then mkdir $(BINDIR); fi;
