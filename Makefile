@@ -37,6 +37,14 @@ SDL: dirs
 	cp SDL/build/include/SDL2/* $(INCDIR)/SDL/ -r
 	cp SDL/build/include-config-/SDL2/* $(INCDIR)/SDL_config/ -r
 
+easy: dirs
+	@-if [ ! -d easy_profiler/buid ]; then mkdir easy_profiler/build; fi;
+	cmake -S easy_profiler -B easy_profiler/build
+	cmake --build easy_profiler/build --parallel `nproc`
+
+	@-if [ ! -d $(INCDIR)/easy ]; then mkdir $(INCDIR)/easy; fi;
+	cp easy_profiler/easy_profiler_core/include/easy/* $(INCDIR)/easy/ -r
+
 dirs:
 	@-if [ ! -d $(BINDIR) ]; then mkdir $(BINDIR); fi;
 	@-if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi;
@@ -50,3 +58,4 @@ clean:
 	@-rm $(INCDIR) -rf
 	@-rm sdl-gpu/build -rf
 	@-rm SDL/build -rf
+	@-rm easy_profiler/build -rf
