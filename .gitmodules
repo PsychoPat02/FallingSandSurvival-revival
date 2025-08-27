@@ -1,3 +1,7 @@
 [submodule "sdl-gpu"]
 	path = sdl-gpu
 	url = https://github.com/grimfang4/sdl-gpu.git
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/libsdl-org/SDL.git
+	branch = SDL2

@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -I./include/
+CXXFLAGS := -I./include/ -I./include/SDL/ -I./include/SDL_config
 LDLIBS :=
 
 SRCDIR := FallingSandSurvival
@@ -25,8 +25,17 @@ SDL_gpu: dirs
 	cmake -S sdl-gpu -B sdl-gpu/build
 	cmake --build sdl-gpu/build --parallel `nproc`
 
-	@-if [ ! -d $(INCDIR) ]; then mkdir $(INCDIR); fi;
 	cp sdl-gpu/build/SDL_gpu/include/* $(INCDIR) -r
+
+SDL: dirs
+	@-if [ ! -d SDL/build ]; then mkdir SDL/build; fi;
+	cmake -S SDL -B SDL/build
+	cmake --build SDL/build --parallel `nproc`
+
+	@-if [ ! -d $(INCDIR)/SDL ]; then mkdir $(INCDIR)/SDL; fi;
+	@-if [ ! -d $(INCDIR)/SDL_config ]; then mkdir $(INCDIR)/SDL_config; fi;
+	cp SDL/build/include/SDL2/* $(INCDIR)/SDL/ -r
+	cp SDL/build/include-config-/SDL2/* $(INCDIR)/SDL_config/ -r
 
 dirs:
 	@-if [ ! -d $(BINDIR) ]; then mkdir $(BINDIR); fi;
@@ -40,3 +49,4 @@ clean:
 	@-rm $(LIBDIR) -rf
 	@-rm $(INCDIR) -rf
 	@-rm sdl-gpu/build -rf
+	@-rm SDL/build -rf
